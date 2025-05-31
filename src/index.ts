@@ -1,5 +1,0 @@
-import unused from 'node:http'
-
-console.log(
-  'dsadsadasdasdasdasdasasdasdasdasdasdasdasdadasdadasdasdsadasdasdasdasdasdsadasdasdasdasdfsadasdasdasdasdsadasdasdasdasdasdsadasdasdasdasd'
-)
