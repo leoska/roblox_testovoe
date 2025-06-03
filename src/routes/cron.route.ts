@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import decreaseBalance from '../controllers/balance.controller';
+import getListTasks from '../controllers/cron.controller';
 
 const cronRoute = Router();
 
-cronRoute.get('/cron/list', decreaseBalance);
+cronRoute.get('/cron/list', getListTasks);
 
 export default cronRoute;

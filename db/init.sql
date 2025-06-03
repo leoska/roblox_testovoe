@@ -9,10 +9,11 @@ CREATE TABLE IF NOT EXISTS cron_locks (
     locked_at TIMESTAMP NOT NULL
 );
 
-CREATE TABLE cron_history (
+CREATE TABLE IF NOT EXISTS cron_history (
     id SERIAL PRIMARY KEY,
     task TEXT,
     server TEXT,
+    status TEXT,
     started_at TIMESTAMP,
     finished_at TIMESTAMP
 );

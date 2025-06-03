@@ -7,6 +7,14 @@ import {
   Sequelize,
 } from 'sequelize';
 
+export type CronHistoryAttributes = {
+  task: string;
+  server: string;
+  status: string;
+  started_at: Date;
+  finished_at: Date;
+};
+
 class CronHistory extends Model<
   InferAttributes<CronHistory>,
   InferCreationAttributes<CronHistory>
@@ -16,6 +24,8 @@ class CronHistory extends Model<
   declare task: string;
 
   declare server: string;
+
+  declare status: string;
 
   declare started_at: Date;
 
@@ -32,6 +42,7 @@ export const initCronHistoryModel = (sequelize: Sequelize) => {
       },
       task: DataTypes.STRING,
       server: DataTypes.STRING,
+      status: DataTypes.STRING,
       started_at: DataTypes.DATE,
       finished_at: DataTypes.DATE,
     },

@@ -1,12 +1,6 @@
-import {
-  DataTypes,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-  Sequelize,
-} from 'sequelize';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 
-class Cron extends Model<InferAttributes<Cron>, InferCreationAttributes<Cron>> {
+class CronLock extends Model {
   declare name: string;
 
   declare locked_by: string;
@@ -14,8 +8,8 @@ class Cron extends Model<InferAttributes<Cron>, InferCreationAttributes<Cron>> {
   declare locked_at: Date;
 }
 
-export const initCronModel = (sequelize: Sequelize) => {
-  Cron.init(
+export const initCronLockModel = (sequelize: Sequelize) => {
+  CronLock.init(
     {
       name: { type: DataTypes.STRING, primaryKey: true },
       locked_by: DataTypes.STRING,
@@ -23,11 +17,11 @@ export const initCronModel = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      modelName: 'Cron',
+      modelName: 'CronLock',
       tableName: 'cron_locks',
       timestamps: false,
     },
   );
 };
 
-export default Cron;
+export default CronLock;

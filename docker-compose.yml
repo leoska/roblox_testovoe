@@ -12,8 +12,7 @@ services:
     container_name: db
     hostname: db
     restart: no
-#    command: -c max_connections=265 -c shared_buffers=512MB -c work_mem=4MB -c maintenance_work_mem=64MB -c checkpoint_completion_target=0.9 -c wal_buffers=16MB -c statement_timeout=5000 -c bgwriter_delay=200ms -c bgwriter_lru_maxpages=100 -c bgwriter_lru_multiplier=2.0
-    command: -c max_connections=265 -c shared_buffers=512MB -c wal_writer_delay=10ms -c commit_delay=0 -с synchronous_commit=on
+    command: -c max_connections=265 -c shared_buffers=512MB -c wal_writer_delay=10ms -c commit_delay=0 -c synchronous_commit=on
     ports:
       - "5432:5432"
     networks:
