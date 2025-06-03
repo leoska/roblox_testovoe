@@ -1,6 +1,7 @@
 import path from 'node:path';
 
 import { includeIgnoreFile } from '@eslint/compat';
+import { globalIgnores } from 'eslint/config';
 import js from '@eslint/js';
 import { configs, plugins } from 'eslint-config-airbnb-extended';
 import { rules as prettierConfigRules } from 'eslint-config-prettier';
@@ -68,6 +69,8 @@ const mdConfig = [
 export default [
   // Ignore .gitignore files/folder in eslint
   includeIgnoreFile(gitignorePath),
+  // Ignore tests folder in eslint
+  globalIgnores(['tests/']),
   // Javascript Config
   ...jsConfig,
   // Node Config

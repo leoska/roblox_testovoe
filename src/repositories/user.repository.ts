@@ -1,4 +1,3 @@
-import { Op } from 'sequelize';
 import { User } from '../models/user.model';
 import sequelize from '../db/db';
 
@@ -8,13 +7,12 @@ const decreaseBalanceByUserID = async (id: number, amount: number) => {
     {
       where: {
         id,
-        balance: { [Op.gte]: amount },
       },
       returning: true,
     },
   );
 
-  return [count, updated.balance];
+  return [count, count ? updated.balance : undefined];
 };
 
 export default decreaseBalanceByUserID;

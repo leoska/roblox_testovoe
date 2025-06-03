@@ -14,8 +14,10 @@ const decreaseBalance = async (
     const balance = await decreaseUserBalance(parsedUserId, amount);
     res.json({ success: true, balance });
   } catch (error: any) {
+    if (!error.expose) throw error;
+
     logger.error(error);
-    res.status(400).json({ success: false, error: error.message });
+    res.status(error.status).json({ success: false, error: error.message });
   }
 };
 
