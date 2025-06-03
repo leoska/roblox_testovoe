@@ -8,13 +8,23 @@ const decreaseBalanceParamsValidator = validate({
   params: params => {
     const isIntegerString = (value: any) => /^\d+$/.test(value);
 
-    if (!params.id) return 'id is required';
+    if (!params.userId) return 'userId is required';
 
-    if (!isIntegerString(params.id)) return 'id param must be a integer';
+    if (!isIntegerString(params.userId))
+      return 'userId param must be a integer';
 
-    const id = parseInt(params.id, 10);
+    const userId = parseInt(params.userId, 10);
 
-    if (id < 1) return 'id param must be greater than 0';
+    if (userId < 1) return 'userId param must be greater than 0';
+
+    return null;
+  },
+  body: body => {
+    if (!body.amount) return 'amount is required';
+
+    if (!Number.isInteger(body.amount)) return 'amount must be a integer';
+
+    if (body.amount < 1) return 'userId param must be greater than 0';
 
     return null;
   },

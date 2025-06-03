@@ -27,3 +27,9 @@ services:
     logging:
       options:
         max-size: 50m
+
+  app:
+    build: .
+    cpus: 4
+    mem_limit: 512M
+    mem_reservation: 256M

@@ -39,6 +39,14 @@ const typescriptConfig = [
   ...configs.base.typescript,
 ];
 
+const customESlintRulesConfig = [
+  {
+    rules: {
+      'no-console': 'off',
+    },
+  },
+];
+
 const prettierConfig = [
   // Prettier Plugin
   {
@@ -74,6 +82,8 @@ export default [
   ...nodeConfig,
   // TypeScript Config
   ...typescriptConfig,
+  // Custom ESLint Rules Config
+  ...customESlintRulesConfig,
   // Prettier Config
   ...prettierConfig,
   // JSON Config

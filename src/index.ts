@@ -1,22 +1,34 @@
+import cluster, { Worker } from 'node:cluster';
 import sequelize from './db/db';
 import app from './app';
 import { umzug } from './db/umzug';
-
-const PORT = process.env.PORT || 8080;
+import processMaster from './master';
 
 (async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Database connected');
+  console.log('Trying to connect to database for up migrations...');
+  await sequelize.authenticate();
 
-    await umzug.up();
+  console.log('Trying to apply migrations...');
+  await umzug.up();
 
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  } catch (err) {
-    console.error('Startup error:', err);
-    // eslint-disable-next-line n/no-process-exit
-    process.exit(1);
-  }
+  processMaster();
 })();
+
+if (cluster.isPrimary) {
+  cluster.on('exit', worker => {
+    console.log(`Worker ${worker.process.pid} died. Restarting...`);
+    cluster.fork();
+  });
+
+  process.once('SIGINT', async () => {
+    try {
+      await Promise.race([app.stop(), timeout(EXIT_MAX_WAIT)]);
+
+      logger.info('Application successfully stopped.');
+      process.exit(0);
+    } catch (e) {
+      logger.error(`Application can't stop correct: ${e}`);
+      process.exit(1);
+    }
+  });
+}

@@ -9,9 +9,11 @@ const decreaseBalance = async (
   const { amount } = req.body;
 
   try {
-    const balance = await decreaseUserBalance(parseInt(userId, 10), amount);
+    const parsedUserId = parseInt(userId, 10);
+    const balance = await decreaseUserBalance(parsedUserId, amount);
     res.json({ success: true, balance });
   } catch (error: any) {
+    console.error(error);
     res.status(400).json({ success: false, error: error.message });
   }
 };

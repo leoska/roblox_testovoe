@@ -1,9 +1,19 @@
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import {
+  DataTypes,
+  Model,
+  Sequelize,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
 
-export class User extends Model {
-  public id!: number;
+export class User extends Model<
+  InferAttributes<User>,
+  InferCreationAttributes<User>
+> {
+  declare id: CreationOptional<number>;
 
-  public balance!: number;
+  declare balance: number;
 }
 
 export const initUserModel = (sequelize: Sequelize) => {
