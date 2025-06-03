@@ -1,4 +1,4 @@
-import { QueryInterface, DataTypes } from 'sequelize';
+import { QueryInterface } from 'sequelize';
 import type { Migration } from '../db/umzug';
 
 export const up: Migration = async ({
@@ -6,21 +6,11 @@ export const up: Migration = async ({
 }: {
   context: QueryInterface;
 }) => {
-  await queryInterface.createTable('users', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+  await queryInterface.bulkInsert('users', [
+    {
+      balance: 10000,
     },
-    balance: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-      validate: {
-        min: 0,
-      },
-    },
-  });
+  ]);
 };
 
 export const down: Migration = async ({
@@ -28,5 +18,7 @@ export const down: Migration = async ({
 }: {
   context: QueryInterface;
 }) => {
-  await queryInterface.dropTable('users');
+  await queryInterface.sequelize.query(
+    'TRUNCATE TABLE users RESTART IDENTITY CASCADE',
+  );
 };

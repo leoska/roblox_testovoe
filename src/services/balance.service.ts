@@ -1,15 +1,18 @@
-import { sequelize } from '../config/database';
-import * as userRepo from '../repositories/user.repository';
+import sequelize from '../db/db';
+import getUserById from '../repositories/user.repository';
 
-export const updateUserBalance = async (userId: number, amount: number) =>
+const decreaseUserBalance = async (userId: number, amount: number) =>
   sequelize.transaction(async t => {
-    const user = await userRepo.getUserById(userId, t);
+    const user = await getUserById(userId, t);
     if (!user) throw new Error('User not found');
 
-    const newBalance = user.balance + amount;
+    const newBalance = user.balance - amount;
     if (newBalance < 0) throw new Error('Insufficient funds');
 
-    await userRepo.updateUserBalance(user, newBalance, t);
+    user.balance = newBalance;
+    await user.save({ transaction: t });
 
     return newBalance;
   });
+
+export default decreaseUserBalance;

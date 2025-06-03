@@ -1,4 +1,4 @@
 import sequelize from '../db/db';
-import { initUserModel } from './User.model';
+import { initUserModel } from './user.model';
 
 initUserModel(sequelize);

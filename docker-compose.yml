@@ -1,0 +1,29 @@
+networks:
+  roblox-network:
+    external: false
+
+volumes:
+  postgres:
+    driver: local
+
+services:
+  db:
+    image: postgres:17.5
+    container_name: db
+    hostname: db
+    restart: no
+    ports:
+      - "5432:5432/tcp"
+    networks:
+      - roblox-network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - postgres:/var/lib/postgresql/data:rw
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: roblox_test
+    shm_size: 128mb
+    logging:
+      options:
+        max-size: 50m
