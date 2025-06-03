@@ -24,7 +24,7 @@ export const initCronModel = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: 'Cron',
-      tableName: 'crons',
+      tableName: 'cron_locks',
       timestamps: false,
     },
   );

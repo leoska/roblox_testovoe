@@ -1,20 +1,20 @@
 import sequelize from './db/db';
-import { umzug } from './db/umzug';
 import app from './app';
+import logger from './logger';
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080;
 
-(async () => {
+export default async function processFork() {
   try {
     await sequelize.authenticate();
-    console.log('Database connected');
+    logger.info('Database connected');
 
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      logger.info(`Server is running on port ${PORT}`);
     });
   } catch (err) {
-    console.error('Startup error:', err);
+    logger.error('Startup error:', err);
     // eslint-disable-next-line n/no-process-exit
     process.exit(1);
   }
-})();
+}

@@ -9,12 +9,15 @@ export default new Sequelize({
   database: process.env.DB_NAME || 'roblox_test',
   logging: false,
   pool: {
-    max: 50,
+    max: 20,
     min: 2,
     acquire: 30000,
     idle: 10000,
   },
   dialectOptions: {
     statement_timeout: 5000,
+  },
+  retry: {
+    max: 3,
   },
 });

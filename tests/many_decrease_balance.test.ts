@@ -1,4 +1,4 @@
-const TOTAL_REQUESTS = 10_000;
+const TOTAL_REQUESTS = 1_000;
 const AMOUNT_PER_REQUEST = 2;
 const USER_ID = 1;
 

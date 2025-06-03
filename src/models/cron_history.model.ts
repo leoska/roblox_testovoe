@@ -1,4 +1,5 @@
 import {
+  CreationOptional,
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
@@ -10,6 +11,8 @@ class CronHistory extends Model<
   InferAttributes<CronHistory>,
   InferCreationAttributes<CronHistory>
 > {
+  declare id: CreationOptional<number>;
+
   declare task: string;
 
   declare server: string;
@@ -22,9 +25,15 @@ class CronHistory extends Model<
 export const initCronHistoryModel = (sequelize: Sequelize) => {
   CronHistory.init(
     {
-      name: { type: DataTypes.STRING, primaryKey: true },
-      locked_by: DataTypes.STRING,
-      locked_at: DataTypes.DATE,
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      task: DataTypes.STRING,
+      server: DataTypes.STRING,
+      started_at: DataTypes.DATE,
+      finished_at: DataTypes.DATE,
     },
     {
       sequelize,
@@ -35,4 +44,4 @@ export const initCronHistoryModel = (sequelize: Sequelize) => {
   );
 };
 
-export default Cron;
+export default CronHistory;

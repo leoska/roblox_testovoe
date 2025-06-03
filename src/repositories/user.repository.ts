@@ -1,10 +1,20 @@
-import { Transaction } from 'sequelize';
+import { Op } from 'sequelize';
 import { User } from '../models/user.model';
+import sequelize from '../db/db';
 
-const getUserById = async (id: number, transaction?: Transaction) =>
-  User.findByPk(id, {
-    transaction,
-    lock: transaction ? transaction.LOCK.UPDATE : undefined,
-  });
+const decreaseBalanceByUserID = async (id: number, amount: number) => {
+  const [count, [updated]] = await User.update(
+    { balance: sequelize.literal(`balance - ${amount}`) },
+    {
+      where: {
+        id,
+        balance: { [Op.gte]: amount },
+      },
+      returning: true,
+    },
+  );
 
-export default getUserById;
+  return [count, updated.balance];
+};
+
+export default decreaseBalanceByUserID;

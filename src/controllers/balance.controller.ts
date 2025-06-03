@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import decreaseUserBalance from '../services/balance.service';
+import logger from '../logger';
 
 const decreaseBalance = async (
   req: Request<{ userId: string }>,
@@ -13,7 +14,7 @@ const decreaseBalance = async (
     const balance = await decreaseUserBalance(parsedUserId, amount);
     res.json({ success: true, balance });
   } catch (error: any) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ success: false, error: error.message });
   }
 };
