@@ -2,6 +2,7 @@ import { CronTask } from '../registry';
 import logger from '../../logger';
 import BaseTask from '../base.task';
 
+// eslint-disable-next-line import-x/prefer-default-export
 export class BillingTask extends BaseTask {
   @CronTask({
     name: 'billing',
@@ -10,7 +11,7 @@ export class BillingTask extends BaseTask {
   static async run() {
     logger.info('Start calculate a billing reports...');
     await new Promise(resolve => {
-      setTimeout(resolve, 2000);
+      setTimeout(resolve, 20 * 60 * 1000);
     });
   }
 }

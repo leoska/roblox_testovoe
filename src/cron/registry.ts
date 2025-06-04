@@ -2,7 +2,7 @@ import { ICronTask } from './base.task';
 
 const DEFAULT_CRON_TIMEOUT_MS = process.env.CRON_TIMEOUT_MS
   ? parseInt(process.env.CRON_TIMEOUT_MS, 10)
-  : 10000;
+  : 10 * 60 * 1000;
 
 export class CronRegistry {
   private static tasks = new Map<string, ICronTask>();

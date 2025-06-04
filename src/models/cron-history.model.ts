@@ -7,13 +7,13 @@ import {
   Sequelize,
 } from 'sequelize';
 
-export type CronHistoryAttributes = {
+export interface CronHistoryAttributes {
   task: string;
   server: string;
   status: string;
   started_at: Date;
   finished_at: Date;
-};
+}
 
 class CronHistory extends Model<
   InferAttributes<CronHistory>,

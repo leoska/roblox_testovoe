@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS public.users (
 CREATE TABLE IF NOT EXISTS cron_locks (
     name TEXT PRIMARY KEY,
     locked_by TEXT NOT NULL,
-    locked_at TIMESTAMP NOT NULL
+    locked_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cron_history (
@@ -14,7 +14,13 @@ CREATE TABLE IF NOT EXISTS cron_history (
     task TEXT,
     server TEXT,
     status TEXT,
-    started_at TIMESTAMP,
-    finished_at TIMESTAMP
+    started_at TIMESTAMP WITHOUT TIME ZONE,
+    finished_at TIMESTAMP WITHOUT TIME ZONE
 );
 
+CREATE TABLE IF NOT EXISTS cron_worker (
+    server TEXT PRIMARY KEY,
+    count_tasks INTEGER NOT NULL DEFAULT 0,
+    "createdAt"  TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
